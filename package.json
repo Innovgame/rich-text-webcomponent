@@ -1,0 +1,44 @@
+{
+    "name": "rich-text-webcomponent",
+    "private": false,
+    "version": "0.0.1",
+    "description": "rich text web component",
+    "type": "module",
+    "license": "MIT",
+    "author": {
+        "name": "rekor",
+        "email": "innovgamejs@163.com"
+    },
+    "files": [
+        "dist",
+        "dist/rich-text-webcomponent.d.ts"
+    ],
+    "keywords": [
+        "rich-text",
+        "web-component"
+    ],
+    "main": "./dist/rich-text-webcomponent.umd.cjs",
+    "module": "./dist/rich-text-webcomponent.js",
+    "types": "./dist/rich-text-webcomponent.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/rich-text-webcomponent.d.ts",
+            "import": "./dist/rich-text-webcomponent.js",
+            "require": "./dist/rich-text-webcomponent.umd.cjs"
+        },
+        "./*": "./*"
+    },
+    "scripts": {
+        "dev": "vite",
+        "build": "tsc && vite build",
+        "preview": "vite preview"
+    },
+    "devDependencies": {
+        "typescript": "~5.9.3",
+        "vite": "npm:rolldown-vite@7.1.14",
+        "vite-plugin-dts": "^4.5.4"
+    },
+    "overrides": {
+        "vite": "npm:rolldown-vite@7.1.14"
+    }
+}
