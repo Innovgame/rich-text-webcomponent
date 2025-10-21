@@ -1,4 +1,4 @@
-import "../lib/entry";
+import "./entry";
 
 document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
   <main>
