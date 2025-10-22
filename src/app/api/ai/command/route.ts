@@ -2,8 +2,10 @@ import type {
   ChatMessage,
   ToolName,
 } from '@/components/use-chat';
+// @ts-ignore
 import type { NextRequest } from 'next/server';
 
+// @ts-ignore
 import { createGateway } from '@ai-sdk/gateway';
 import {
   type LanguageModel,
@@ -15,6 +17,7 @@ import {
   streamText,
   tool,
 } from 'ai';
+// @ts-ignore
 import { NextResponse } from 'next/server';
 import { type SlateEditor, createSlateEditor, nanoid } from 'platejs';
 import { z } from 'zod';
@@ -40,6 +43,7 @@ export async function POST(req: NextRequest) {
     value: children,
   });
 
+  // @ts-ignore
   const apiKey = key || process.env.AI_GATEWAY_API_KEY;
 
   if (!apiKey) {

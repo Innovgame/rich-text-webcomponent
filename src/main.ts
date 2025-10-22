@@ -1,4 +1,5 @@
-import "./entry";
+import "../dist/rich-text-webcomponent";
+import "../dist/rich-text-webcomponent.css";
 
 document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
   <main>
