@@ -3,7 +3,7 @@ import "./rich-text.css";
 import { PlateEditor } from "@/components/plate-editor";
 
 type RichTextProps = {
-    stringProp: string;
+    // stringProp: string;
     // numProp: number;
     // floatProp: number;
     // trueProp: boolean;
@@ -13,6 +13,6 @@ type RichTextProps = {
     // funcProp: (name: string) => void;
 };
 
-export const RichText: React.FC<RichTextProps> = ({ stringProp }) => {
+export const RichText: React.FC<RichTextProps> = ({}) => {
     return <PlateEditor></PlateEditor>;
 };

@@ -3,7 +3,7 @@ import { RichText } from "./rich-text";
 
 const RichTextComponent = r2wc(RichText, {
     props: {
-        stringProp: "string",
+        // stringProp: "string",
         // numProp: "number",
         // floatProp: "number",
         // trueProp: "boolean",

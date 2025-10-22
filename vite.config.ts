@@ -8,7 +8,7 @@ export default defineConfig({
     plugins: [react(), tailwindcss(), dts({ rollupTypes: true, outDir: "./dist" })],
     build: {
         lib: {
-            entry: "./lib/entry.ts",
+            entry: "./src/entry.ts",
             name: "RichTextWebComponent",
             fileName: "rich-text-webcomponent",
         },
