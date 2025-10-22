@@ -14,7 +14,7 @@ import { type PlateEditor, useEditorRef, usePluginOption } from 'platejs/react';
 
 import { aiChatPlugin } from '@/components/ai-kit';
 
-import { discussionPlugin } from './plugins/discussion-kit';
+import { discussionPlugin } from './discussion-kit';
 
 export type ToolName = 'comment' | 'edit' | 'generate';
 
@@ -118,7 +118,6 @@ export const useChat = () => {
 
       if (data.type === 'data-comment' && data.data) {
         if (data.data.status === 'finished') {
-          editor.getApi(AIChatPlugin).aiChat.hide();
           editor.getApi(BlockSelectionPlugin).blockSelection.deselect();
 
           return;
@@ -222,6 +221,7 @@ const fakeStreamText = ({
 
         if (sample === 'comment') {
           const commentChunks = createCommentChunks(editor);
+          console.log('🚀 ~ fakeStreamText ~ commentChunks:', commentChunks);
           return commentChunks;
         }
 
@@ -1489,7 +1489,7 @@ const createCommentChunks = (editor: PlateEditor) => {
   const indexes = Array.from(result).sort((a, b) => a - b);
 
   const chunks = indexes
-    .map((index) => {
+    .map((index, i) => {
       const block = blocks[index];
       if (!block) {
         return [];
@@ -1503,7 +1503,7 @@ const createCommentChunks = (editor: PlateEditor) => {
       return [
         {
           delay: faker.number.int({ max: 500, min: 200 }),
-          texts: `{"id":"${nanoid()}","data":{"blockId":"${block.id}","comment":"${faker.lorem.sentence()}","content":"${content}"},"type":"data-comment"}`,
+          texts: `{"id":"${nanoid()}","data":{"comment":{"blockId":"${block.id}","comment":"${faker.lorem.sentence()}","content":"${content}"},"status":"${i === indexes.length - 1 ? 'finished' : 'streaming'}"},"type":"data-comment"}`,
         },
       ];
     })
