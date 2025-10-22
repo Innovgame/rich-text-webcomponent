@@ -11,7 +11,8 @@
     },
     "files": [
         "dist",
-        "dist/rich-text-webcomponent.d.ts"
+        "dist/rich-text-webcomponent.d.ts",
+        "dist/rich-text-webcomponent.css"
     ],
     "keywords": [
         "rich-text",
