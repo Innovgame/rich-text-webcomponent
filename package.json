@@ -1,7 +1,7 @@
 {
     "name": "rich-text-webcomponent",
     "private": false,
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "rich text web component",
     "type": "module",
     "license": "MIT",
@@ -21,13 +21,16 @@
     "main": "./dist/rich-text-webcomponent.umd.cjs",
     "module": "./dist/rich-text-webcomponent.js",
     "types": "./dist/rich-text-webcomponent.d.ts",
+    "style": "./dist/rich-text-webcomponent.css",
     "exports": {
         ".": {
             "types": "./dist/rich-text-webcomponent.d.ts",
             "import": "./dist/rich-text-webcomponent.js",
-            "require": "./dist/rich-text-webcomponent.umd.cjs"
+            "require": "./dist/rich-text-webcomponent.umd.cjs",
+            "style": "./dist/rich-text-webcomponent.css"
         },
-        "./*": "./*"
+        "./*": "./*",
+        "./index.css": "./dist/rich-text-webcomponent.css"
     },
     "scripts": {
         "dev": "vite",
