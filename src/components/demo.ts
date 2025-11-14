@@ -536,3 +536,28 @@ export const content = [
         type: "p",
     },
 ];
+
+export const defaultContent = [
+    {
+        children: [{ text: "Welcome to the Plate Playground!" }],
+        type: "h1",
+    },
+    {
+        children: [
+            { text: "Experience a modern rich-text editor built with " },
+            { children: [{ text: "Slate" }], type: "a", url: "https://slatejs.org" },
+            { text: " and " },
+            { children: [{ text: "React" }], type: "a", url: "https://reactjs.org" },
+            {
+                text: ". This playground showcases just a part of Plate's capabilities. ",
+            },
+            {
+                children: [{ text: "Explore the documentation" }],
+                type: "a",
+                url: "/docs",
+            },
+            { text: " to discover more." },
+        ],
+        type: "p",
+    },
+];

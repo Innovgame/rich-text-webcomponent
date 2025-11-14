@@ -12,6 +12,29 @@ import { z } from 'zod';
 
 export type UploadedFile<T = unknown> = ClientUploadedFileData<T>;
 
+interface CustomUploadFnParams {
+  file: File;
+  onUploadProgress?: ({
+    file,
+    progress,
+    loaded,
+    delta,
+    totalLoaded,
+    totalProgress,
+  }: {
+    file: File;
+    progress: number;
+    loaded: number;
+    delta: number;
+    totalLoaded: number;
+    totalProgress: number;
+  }) => void;
+  onUploadBegin?: (opts: { file: string }) => void;
+  headers?: any;
+  skipPolling?: any;
+  [key: string]: any;
+}
+
 interface UseUploadFileProps
   extends Pick<
     UploadFilesOptions<OurFileRouter['editorUploader']>,
@@ -19,11 +42,13 @@ interface UseUploadFileProps
   > {
   onUploadComplete?: (file: UploadedFile) => void;
   onUploadError?: (error: unknown) => void;
+  customUploadFn?: (params: CustomUploadFnParams) => Promise<UploadedFile | UploadedFile[]>;
 }
 
 export function useUploadFile({
   onUploadComplete,
   onUploadError,
+  customUploadFn,
   ...props
 }: UseUploadFileProps = {}) {
   const [uploadedFile, setUploadedFile] = React.useState<UploadedFile>();
@@ -36,19 +61,35 @@ export function useUploadFile({
     setUploadingFile(file);
 
     try {
-      const res = await uploadFiles('editorUploader', {
-        ...props,
-        files: [file],
-        onUploadProgress: ({ progress }) => {
-          setProgress(Math.min(progress, 100));
-        },
-      });
+      let res;
+      // 如果有自定义上传函数，使用它；否则使用默认的 uploadFiles
+      if (customUploadFn) {
+        res = await customUploadFn({
+          ...props,
+          file: file,
+          onUploadProgress: ({ progress }) => {
+            setProgress(Math.min(progress, 100));
+          },
+        });
+        // 标准化返回值为数组格式
+        if (!Array.isArray(res)) {
+          res = [res];
+        }
+      } else {
+        res = await uploadFiles('editorUploader', {
+          ...props,
+          files: [file],
+          onUploadProgress: ({ progress }) => {
+            setProgress(Math.min(progress, 100));
+          },
+        });
+      }
 
       setUploadedFile(res[0]);
 
       onUploadComplete?.(res[0]);
 
-      return uploadedFile;
+      return res[0];
     } catch (error) {
       const errorMessage = getErrorMessage(error);
 

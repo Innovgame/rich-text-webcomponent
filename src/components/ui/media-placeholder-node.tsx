@@ -55,8 +55,16 @@ export const PlaceholderElement = withHOC(
 
     const { api } = useEditorPlugin(PlaceholderPlugin);
 
+    // 检查是否有全局自定义上传函数
+    const globalUploadFn =
+      typeof window !== 'undefined'
+        ? (window as any).customUploadFiles
+        : undefined;
+
     const { isUploading, progress, uploadedFile, uploadFile, uploadingFile } =
-      useUploadFile();
+      useUploadFile({
+        customUploadFn: globalUploadFn,
+      });
 
     const loading = isUploading && uploadingFile;
 
