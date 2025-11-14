@@ -1,6 +1,6 @@
 import React from "react";
 import "./rich-text.css";
-import { PlateEditor } from "@/components/plate-editor";
+import { PlateEditorComponent } from "@/components/plate-editor";
 
 type RichTextProps = {
     // stringProp: string;
@@ -14,5 +14,5 @@ type RichTextProps = {
 };
 
 export const RichText: React.FC<RichTextProps> = ({}) => {
-    return <PlateEditor></PlateEditor>;
+    return <PlateEditorComponent></PlateEditorComponent>;
 };

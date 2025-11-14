@@ -8,7 +8,7 @@ import { SettingsDialog } from '@/components/settings-dialog';
 import { Editor, EditorContainer } from '@/components/ui/editor';
 import { defaultContent } from './demo'
 
-export function PlateEditor() {
+export function PlateEditorComponent() {
   const editor = usePlateEditor({
     plugins: EditorKit,
     value,
