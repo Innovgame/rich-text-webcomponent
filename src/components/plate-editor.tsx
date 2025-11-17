@@ -1,28 +1,28 @@
-'use client';
+"use client";
 
-import { normalizeNodeId } from 'platejs';
-import { Plate, usePlateEditor } from 'platejs/react';
+import { Plate, usePlateEditor } from "platejs/react";
+import { EditorKit } from "@/components/editor-kit";
+import { SettingsDialog } from "@/components/settings-dialog";
+import { Editor, EditorContainer } from "@/components/ui/editor";
 
-import { EditorKit } from '@/components/editor-kit';
-import { SettingsDialog } from '@/components/settings-dialog';
-import { Editor, EditorContainer } from '@/components/ui/editor';
-import { defaultContent } from './demo'
-
-export function PlateEditorComponent() {
-  const editor = usePlateEditor({
-    plugins: EditorKit,
-    value,
-  });
-
-  return (
-    <Plate editor={editor}>
-      <EditorContainer>
-        <Editor variant="demo" />
-      </EditorContainer>
-
-      <SettingsDialog />
-    </Plate>
-  );
+interface PlateEditorProps {
+    readOnly?: boolean;
+    value?: string;
 }
 
-const value = normalizeNodeId(defaultContent);
+export function PlateEditorComponent({ readOnly = false, value: propValue }: PlateEditorProps) {
+    const editor = usePlateEditor({
+        plugins: EditorKit,
+        value: propValue,
+    });
+
+    return (
+        <Plate editor={editor}>
+            <EditorContainer>
+                <Editor variant="demo" readOnly={readOnly} />
+            </EditorContainer>
+
+            <SettingsDialog />
+        </Plate>
+    );
+}
