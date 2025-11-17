@@ -12,13 +12,20 @@ import { EditorStatic } from "@/components/ui/editor-static";
 import { UploadProvider } from "./context";
 
 type RichTextProps = {
+    variant?: "ai" | "aiChat" | "comment" | "none" | "default" | "select" | "demo" | "fullWidth" | null | undefined;
     content?: string;
     readOnly?: boolean;
     exportHtml?: Function;
     customUploadFiles?: any /** Function */;
 };
 
-export const RichText: React.FC<RichTextProps> = ({ content = "<p>Hello World!</p>", readOnly = true, exportHtml, customUploadFiles }) => {
+export const RichText: React.FC<RichTextProps> = ({
+    content = "<p>Hello World!</p>",
+    readOnly = true,
+    exportHtml,
+    customUploadFiles,
+    variant = "default",
+}) => {
     const editor = usePlateEditor({
         plugins: EditorKit,
         value: content,
@@ -42,7 +49,7 @@ export const RichText: React.FC<RichTextProps> = ({ content = "<p>Hello World!</
         <UploadProvider customUploadFiles={customUploadFiles}>
             <Plate editor={editor} readOnly={readOnly}>
                 <EditorContainer>
-                    <Editor variant="default" />
+                    <Editor variant={variant} />
                 </EditorContainer>
 
                 {!readOnly && (

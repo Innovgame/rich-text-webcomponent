@@ -6,6 +6,7 @@ const app = document.querySelector<HTMLDivElement>("#app")!;
 const component = document.createElement("rich-text-component") as any;
 component.content = html;
 component.readOnly = false;
+component.variant = "default";
 component.exportHtml = (html: string) => {
     console.log(html);
 };
