@@ -5,5 +5,8 @@ const html = `<div class="slate-editor group/editor relative w-full cursor-text 
 const app = document.querySelector<HTMLDivElement>("#app")!;
 const component = document.createElement("rich-text-component") as any;
 component.content = html;
-component.readOnly = true;
+component.readOnly = false;
+component.exportHtml = (html: string) => {
+    debugger;
+};
 app.appendChild(component);

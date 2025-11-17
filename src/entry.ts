@@ -10,7 +10,7 @@ const RichTextWebComponent = r2wc(RichText, {
         // falseProp: "boolean",
         // arrayProp: "json",
         // objProp: "json",
-        // funcProp: "function",
+        exportHtml: "function",
         readOnly: "boolean",
         content: "string",
     },
