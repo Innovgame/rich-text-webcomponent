@@ -11,6 +11,8 @@ const RichTextComponent = r2wc(RichText, {
         // arrayProp: "json",
         // objProp: "json",
         // funcProp: "function",
+        readOnly: "boolean",
+        content: "string",
     },
 });
 

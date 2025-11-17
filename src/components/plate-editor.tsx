@@ -17,9 +17,9 @@ export function PlateEditorComponent({ readOnly = false, value: propValue }: Pla
     });
 
     return (
-        <Plate editor={editor}>
+        <Plate editor={editor} readOnly={readOnly}>
             <EditorContainer>
-                <Editor variant="demo" readOnly={readOnly} />
+                <Editor variant="demo" />
             </EditorContainer>
 
             <SettingsDialog />
