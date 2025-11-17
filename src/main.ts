@@ -9,4 +9,7 @@ component.readOnly = false;
 component.exportHtml = (html: string) => {
     console.log(html);
 };
+component.customUploadFiles = () => {
+    console.log("customUploadFiles");
+};
 app.appendChild(component);

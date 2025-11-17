@@ -1,7 +1,7 @@
 {
     "name": "rich-text-webcomponent",
     "private": false,
-    "version": "0.0.7",
+    "version": "0.0.8",
     "description": "rich text web component",
     "type": "module",
     "license": "MIT",
@@ -25,9 +25,9 @@
     "exports": {
         ".": {
             "types": "./dist/rich-text-webcomponent.d.ts",
+            "style": "./dist/rich-text-webcomponent.css",
             "import": "./dist/rich-text-webcomponent.js",
-            "require": "./dist/rich-text-webcomponent.umd.cjs",
-            "style": "./dist/rich-text-webcomponent.css"
+            "require": "./dist/rich-text-webcomponent.umd.cjs"
         },
         "./*": "./*",
         "./index.css": "./dist/rich-text-webcomponent.css"

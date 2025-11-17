@@ -12,7 +12,7 @@ import { z } from 'zod';
 
 export type UploadedFile<T = unknown> = ClientUploadedFileData<T>;
 
-interface CustomUploadFnParams {
+export interface CustomUploadFnParams {
   file: File;
   onUploadProgress?: ({
     file,

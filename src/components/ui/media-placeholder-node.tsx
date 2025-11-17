@@ -17,6 +17,7 @@ import { useFilePicker } from 'use-file-picker';
 
 import { cn } from '@/lib/utils';
 import { useUploadFile } from '@/hooks/use-upload-file';
+import { UploadContext } from '@/context';
 
 const CONTENT: Record<
   string,
@@ -52,18 +53,11 @@ export const PlaceholderElement = withHOC(
   PlaceholderProvider,
   function PlaceholderElement(props: PlateElementProps<TPlaceholderElement>) {
     const { editor, element } = props;
-
+    const { customUploadFiles } = React.useContext(UploadContext);
     const { api } = useEditorPlugin(PlaceholderPlugin);
-
-    // 检查是否有全局自定义上传函数
-    const globalUploadFn =
-      typeof window !== 'undefined'
-        ? (window as any).customUploadFiles
-        : undefined;
-
     const { isUploading, progress, uploadedFile, uploadFile, uploadingFile } =
       useUploadFile({
-        customUploadFn: globalUploadFn,
+        customUploadFn: customUploadFiles,
       });
 
     const loading = isUploading && uploadingFile;
