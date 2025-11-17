@@ -1,7 +1,7 @@
 {
     "name": "rich-text-webcomponent",
     "private": false,
-    "version": "0.0.5",
+    "version": "0.0.6",
     "description": "rich text web component",
     "type": "module",
     "license": "MIT",
