@@ -7,6 +7,6 @@ const component = document.createElement("rich-text-component") as any;
 component.content = html;
 component.readOnly = false;
 component.exportHtml = (html: string) => {
-    debugger;
+    console.log(html);
 };
 app.appendChild(component);
