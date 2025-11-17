@@ -38,14 +38,17 @@ export function PlateEditorComponent({ readOnly = false, value: propValue, expor
     return (
         <Plate editor={editor} readOnly={readOnly}>
             <EditorContainer>
-                <Editor variant="demo" />
+                <Editor variant="default" />
             </EditorContainer>
 
-            <SettingsDialog />
-
-            <button className="absolute bottom-20 right-4 bg-amber-200 py-2 px-4 rounded-md cursor-pointer" onClick={handleExportHtml}>
-                Save
-            </button>
+            {!readOnly && (
+                <>
+                    <SettingsDialog />
+                    <button className="absolute bottom-20 right-4 bg-amber-200 py-2 px-4 rounded-md cursor-pointer" onClick={handleExportHtml}>
+                        Save
+                    </button>
+                </>
+            )}
         </Plate>
     );
 }
