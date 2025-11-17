@@ -1,7 +1,7 @@
 import r2wc from "@r2wc/react-to-web-component";
 import { RichText } from "./rich-text";
 
-const RichTextComponent = r2wc(RichText, {
+const RichTextWebComponent = r2wc(RichText, {
     props: {
         // stringProp: "string",
         // numProp: "number",
@@ -16,4 +16,4 @@ const RichTextComponent = r2wc(RichText, {
     },
 });
 
-customElements.define("rich-text-component", RichTextComponent);
+customElements.define("rich-text-component", RichTextWebComponent);

@@ -156,7 +156,7 @@ export function FixedToolbarButtons() {
         <MarkToolbarButton nodeType={KEYS.highlight} tooltip="Highlight">
           <HighlighterIcon />
         </MarkToolbarButton>
-        <CommentToolbarButton />
+        {/* <CommentToolbarButton /> */}
       </ToolbarGroup>
 
       <ToolbarGroup>
