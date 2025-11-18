@@ -55,9 +55,9 @@ export const RichText: React.FC<RichTextProps> = ({
                 {!readOnly && (
                     <>
                         <SettingsDialog />
-                        <button className="absolute bottom-20 right-4 bg-amber-200 py-2 px-4 rounded-md cursor-pointer" onClick={handleExportHtml}>
+                        <div className="absolute bottom-20 right-4 bg-amber-200 py-2 px-4 rounded-md cursor-pointer" onClick={handleExportHtml}>
                             Save
-                        </button>
+                        </div>
                     </>
                 )}
             </Plate>
