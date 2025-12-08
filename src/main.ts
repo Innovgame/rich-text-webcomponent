@@ -7,10 +7,19 @@ const component = document.createElement("rich-text-webcomponent") as any;
 component.content = html;
 component.readOnly = false;
 component.variant = "default";
-component.exportHtml = (html: string) => {
-    console.log(html);
-};
 component.customUploadFiles = () => {
     console.log("customUploadFiles");
 };
 app.appendChild(component);
+
+// 使用示例
+component
+    .exportHtml()
+    .then((html: any) => {
+        debugger;
+        console.log("导出的HTML:", html);
+    })
+    .catch((error: any) => {
+        debugger;
+        console.error("导出失败:", error);
+    });
