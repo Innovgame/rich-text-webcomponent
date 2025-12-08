@@ -1,10 +1,11 @@
 import r2wc from "@r2wc/react-to-web-component";
 import { RichText } from "./rich-text";
+import "./type"; // 确保类型声明被包含在构建中
 
 // 事件名称常量
 const EVENTS = {
-    REQUEST_EXPORT: 'request-export-html',
-    RESPONSE_EXPORT: 'response-export-html',
+    REQUEST_EXPORT: "request-export-html",
+    RESPONSE_EXPORT: "response-export-html",
 };
 
 const RichTextComponent = r2wc(RichText, {
@@ -33,7 +34,7 @@ RichTextComponent.prototype.connectedCallback = function () {
 
                 if (responseId === requestId) {
                     clearTimeout(timeoutId);
-                    document.removeEventListener('response-export-html', handleResponse);
+                    document.removeEventListener("response-export-html", handleResponse);
 
                     if (error) {
                         reject(new Error(error));
@@ -45,7 +46,7 @@ RichTextComponent.prototype.connectedCallback = function () {
 
             const timeoutId = setTimeout(() => {
                 document.removeEventListener(EVENTS.RESPONSE_EXPORT, handleResponse);
-                reject(new Error('Export timeout'));
+                reject(new Error("Export timeout"));
             }, 5000); // 5秒超时
 
             document.addEventListener(EVENTS.RESPONSE_EXPORT, handleResponse);
@@ -65,3 +66,5 @@ RichTextComponent.prototype.connectedCallback = function () {
 };
 
 customElements.define("rich-text-webcomponent", RichTextComponent);
+
+export * from "./type";

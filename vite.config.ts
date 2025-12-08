@@ -5,7 +5,14 @@ import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
-    plugins: [react(), tailwindcss(), dts({ rollupTypes: true, outDir: "./dist" })],
+    plugins: [
+        react(),
+        tailwindcss(),
+        dts({
+            rollupTypes: true,
+            outDir: "./dist",
+        }),
+    ],
     build: {
         lib: {
             entry: "./src/entry.ts",
