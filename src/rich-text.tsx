@@ -1,6 +1,4 @@
 import { useEffect } from "react";
-import "./rich-text.css";
-
 import { Plate, usePlateEditor } from "platejs/react";
 import { EditorKit } from "@/components/editor-kit";
 import { SettingsDialog } from "@/components/settings-dialog";
@@ -10,12 +8,11 @@ import { BaseEditorKit } from "@/components/editor-base-kit";
 import { serializeHtml } from "platejs/static";
 import { EditorStatic } from "@/components/ui/editor-static";
 import { UploadProvider } from "./context";
-import { content } from "@/components/demo";
 
 // 事件名称常量
 const EVENTS = {
-    REQUEST_EXPORT: 'request-export-html',
-    RESPONSE_EXPORT: 'response-export-html',
+    REQUEST_EXPORT: "request-export-html",
+    RESPONSE_EXPORT: "response-export-html",
 };
 
 type RichTextProps = {
@@ -25,7 +22,7 @@ type RichTextProps = {
     customUploadFiles?: any /** Function */;
 };
 
-export const RichText = ({ readOnly = true, customUploadFiles, variant = "default" }: RichTextProps) => {
+export const RichText: React.FC<RichTextProps> = ({ content = "<p>Hello World!</p>", readOnly = true, customUploadFiles, variant = "default" }) => {
     const editor = usePlateEditor({
         plugins: EditorKit,
         value: content,
