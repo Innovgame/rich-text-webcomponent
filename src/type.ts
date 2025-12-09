@@ -5,7 +5,7 @@ export interface RichTextWebComponent extends HTMLElement {
      * 导出当前编辑器内容为 HTML 字符串
      * @returns Promise<string> 导出的 HTML 字符串
      */
-    exportHtml(): Promise<string>;
+    exportHtml?: (fn: () => Promise<string>) => void;
 
     /**
      * 自定义文件上传函数（可选）

@@ -13,14 +13,9 @@ component.customUploadFiles = () => {
 };
 app.appendChild(component);
 
-// 使用示例
-component
-    .exportHtml()
-    .then((html: any) => {
-        debugger;
-        console.log("导出的HTML:", html);
-    })
-    .catch((error: any) => {
-        debugger;
-        console.error("导出失败:", error);
-    });
+setTimeout(() => {
+    // 使用示例
+    // component.exportHtml = (fn) => {
+    //     debugger;
+    // };
+}, 2000);

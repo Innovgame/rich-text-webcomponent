@@ -1,78 +1,84 @@
-import { useEffect } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { Plate, usePlateEditor } from "platejs/react";
 import { EditorKit } from "@/components/editor-kit";
 import { SettingsDialog } from "@/components/settings-dialog";
 import { Editor, EditorContainer } from "@/components/ui/editor";
 import { createSlateEditor } from "platejs";
-import { BaseEditorKit } from "@/components/editor-base-kit";
 import { serializeHtml } from "platejs/static";
 import { EditorStatic } from "@/components/ui/editor-static";
+import { BaseEditorKit } from "@/components/editor-base-kit";
 import { UploadProvider } from "./context";
 
-// 事件名称常量
-const EVENTS = {
-    REQUEST_EXPORT: "request-export-html",
-    RESPONSE_EXPORT: "response-export-html",
-};
-
 type RichTextProps = {
-    variant?: "ai" | "aiChat" | "comment" | "none" | "default" | "select" | "demo" | "fullWidth" | null | undefined;
+    variant?: "ai" | "aiChat" | "none" | "default" | "select" | "demo" | "fullWidth" | null | undefined;
     content?: string;
     readOnly?: boolean;
     customUploadFiles?: any /** Function */;
+    exportHtml?: (fn: () => Promise<string>) => void /** Function */;
 };
 
-export const RichText: React.FC<RichTextProps> = ({ content = "<p>Hello World!</p>", readOnly = true, customUploadFiles, variant = "default" }) => {
+export const RichText: React.FC<RichTextProps> = ({
+    content = "<p>Hello World!</p>",
+    readOnly = true,
+    customUploadFiles,
+    variant = "default",
+    exportHtml,
+}) => {
     const editor = usePlateEditor({
         plugins: EditorKit,
         value: content,
     });
 
-    async function exportHtml() {
-        const editorStatic = createSlateEditor({
-            plugins: BaseEditorKit,
-            value: editor.children,
-        });
+    // 使用 useRef 跟踪 content 的变化
+    const contentRef = useRef(content);
 
-        const editorHtml = await serializeHtml(editorStatic, {
-            editorComponent: EditorStatic,
-            props: { style: { padding: "0 calc(50% - 350px)", paddingBottom: "" } },
-        });
-
-        return editorHtml;
-    }
-
-    // 监听来自 Web Component 的导出请求
+    // 监听 content 变化并更新编辑器
     useEffect(() => {
-        const handleExportRequest = async (event: Event) => {
-            const customEvent = event as CustomEvent;
-            const { requestId } = customEvent.detail;
-
+        if (content !== contentRef.current) {
+            contentRef.current = content;
+            // 使用正确的 Plate API 更新编辑器
             try {
-                const html = await exportHtml();
-                // 发送响应事件
-                const responseEvent = new CustomEvent(EVENTS.RESPONSE_EXPORT, {
-                    detail: { requestId, html },
-                    bubbles: true,
-                    composed: true,
+                // console.log("content change: ", contentRef.current);
+                // 创建一个临时编辑器来解析HTML字符串
+                const tempEditor = createSlateEditor({
+                    plugins: EditorKit,
+                    value: content,
                 });
-                document.dispatchEvent(responseEvent);
-            } catch (error: any) {
-                // 发送错误响应事件
-                const errorEvent = new CustomEvent(EVENTS.RESPONSE_EXPORT, {
-                    detail: { requestId, error: error.message },
-                    bubbles: true,
-                    composed: true,
-                });
-                document.dispatchEvent(errorEvent);
-            }
-        };
 
-        document.addEventListener(EVENTS.REQUEST_EXPORT, handleExportRequest);
-        return () => {
-            document.removeEventListener(EVENTS.REQUEST_EXPORT, handleExportRequest);
-        };
-    }, []);
+                // 获取解析后的节点并更新主编辑器
+                editor.tf.replaceNodes(tempEditor.children, {
+                    at: [],
+                    children: true,
+                });
+            } catch (error) {
+                console.warn("rich-text-component Failed to update editor content:", error);
+            }
+        }
+    }, [content, editor]);
+
+    // 实际的 exportHtml 实现
+    const exportHtmlImpl = useCallback(async () => {
+        try {
+            const editorStatic = createSlateEditor({
+                plugins: BaseEditorKit,
+                value: editor.children,
+            });
+
+            const editorHtml = await serializeHtml(editorStatic, {
+                editorComponent: EditorStatic,
+                props: { variant: variant, style: { paddingBottom: "" } },
+            });
+            return editorHtml;
+        } catch (error) {
+            console.warn("rich-text-component Failed to export html string:", error);
+            return "";
+        }
+    }, [editor, variant]);
+
+    // 在组件挂载时暴露方法给 props.exportHtml
+    useEffect(() => {
+        if (exportHtml) exportHtml(exportHtmlImpl);
+    }, [exportHtml, exportHtmlImpl]);
 
     return (
         <UploadProvider customUploadFiles={customUploadFiles}>
@@ -80,15 +86,7 @@ export const RichText: React.FC<RichTextProps> = ({ content = "<p>Hello World!</
                 <EditorContainer>
                     <Editor variant={variant} />
                 </EditorContainer>
-
-                {!readOnly && (
-                    <>
-                        <SettingsDialog />
-                        {/* <div className="absolute bottom-20 right-4 bg-amber-200 py-2 px-4 rounded-md cursor-pointer" onClick={exportHtml}>
-                            Save
-                        </div> */}
-                    </>
-                )}
+                {!readOnly && <SettingsDialog />}
             </Plate>
         </UploadProvider>
     );
